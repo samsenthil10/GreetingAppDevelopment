@@ -1,7 +1,6 @@
 package com.bridgelabz.greetingappdevelopment.model;
 
 public class User {
-    
     private String firstName;
     private String lastName;
 
@@ -20,4 +19,12 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        String message = (firstName != null) ? firstName + " " : "";
+        message += (lastName != null) ? lastName : "";
+        return message.trim();
+    }
+
 }
