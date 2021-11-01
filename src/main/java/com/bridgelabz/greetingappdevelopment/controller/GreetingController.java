@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class GreetingController {
 
     private static String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
-    
+
     @Autowired
     private IGreetingService greetingService;
 
@@ -34,9 +35,9 @@ public class GreetingController {
     }
 
     @GetMapping("/get/{id}")
-	public String getMessageById(@PathVariable Long id) {
+    public String getMessageById(@PathVariable Long id) {
         return greetingService.getGreetingById(id).getMessage();
-	}
+    }
 
     @PostMapping("/post")
     public Greeting setUser(@RequestBody Greeting greeting) {
@@ -47,5 +48,10 @@ public class GreetingController {
     public Greeting sayHelloPutMethod(@PathVariable String firstName,
             @RequestParam(value = "lastName", defaultValue = "S A") String lastName) {
         return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
+    }
+
+    @GetMapping("/getAll")
+    public List<Greeting> getMessages() {
+        return greetingService.getAllGreetings();
     }
 }
