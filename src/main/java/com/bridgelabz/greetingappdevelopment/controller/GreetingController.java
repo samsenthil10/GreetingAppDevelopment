@@ -46,4 +46,10 @@ public class GreetingController {
         return greetingService.editGreeting(name1, name2);
     }
 
+    @DeleteMapping("/delete/{name}")
+    public List<Greeting> deleteGreeting(@PathVariable String name) {
+
+        return greetingService.deleteGreeting(name);
+    }
+
 }
