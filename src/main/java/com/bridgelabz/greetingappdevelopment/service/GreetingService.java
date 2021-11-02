@@ -1,6 +1,7 @@
 package com.bridgelabz.greetingappdevelopment.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.bridgelabz.greetingappdevelopment.model.Greeting;
@@ -32,5 +33,18 @@ public class GreetingService implements IGreetingService {
 
     public List<Greeting> getAllGreetings() {
         return greetingRepository.findAll();
+    }
+
+    @Override
+    public Greeting editGreeting(Long id, User user) {
+        String message = String.format(template, (user.toString().isEmpty()) ? "Hello World" : user.toString());
+        Optional<Greeting> greetingData = greetingRepository.findById(id);
+        if (greetingData.isPresent()) {
+            Greeting greeting = greetingData.get();
+            greeting.setMessage(message);
+            greetingRepository.save(greeting);
+            return greeting;
+        }
+        return null;
     }
 }
