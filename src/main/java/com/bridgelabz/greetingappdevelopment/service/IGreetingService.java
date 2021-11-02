@@ -14,4 +14,6 @@ public interface IGreetingService {
 
     Greeting editGreeting(String name1, String name2);
 
+    List<Greeting> deleteGreeting(String name);
+
 }
