@@ -54,4 +54,15 @@ public class GreetingController {
     public List<Greeting> getMessages() {
         return greetingService.getAllGreetings();
     }
+
+    @PutMapping("/edit/{id}")
+	public Greeting sayHelloPutMethod(@PathVariable Long id,
+			@RequestParam(value="firstName",defaultValue = "")String firstName,
+			@RequestParam(value="lastName",defaultValue = "")String lastName)
+	{
+		User user = new User();
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		return greetingService.editGreeting(id,user);
+	}
 }
