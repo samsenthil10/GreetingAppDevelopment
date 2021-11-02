@@ -21,7 +21,7 @@ public class GreetingService implements IGreetingService {
 
     @Override
     public Greeting addGreeting(User user) {
-        String message = String.format(template, (user.toString().isEmpty()) ? "HEllo world" : user.toString());
+        String message = String.format(template, (user.toString().isEmpty()) ? "Hello world" : user.toString());
         return greetingRepository.save(new Greeting(counter.incrementAndGet(), message));
     }
 
@@ -47,7 +47,7 @@ public class GreetingService implements IGreetingService {
                 break;
             }
         }
-        String message = String.format(template, (name2.isEmpty()) ? "HEllo world" : name2);
+        String message = String.format(template, (name2.isEmpty()) ? "Hello world" : name2);
         greetingToEdit.setMessage(message);
         return greetingRepository.save(greetingToEdit);
 
