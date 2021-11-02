@@ -9,7 +9,6 @@ import javax.persistence.Table;
 public class Greeting {
     @Id
     private long id;
-
     private String message;
 
     public Greeting() {
@@ -18,15 +17,8 @@ public class Greeting {
     }
 
     public Greeting(long id, String message) {
-        setId(id);
-        setMessage(message);
-    }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
+        this.id = id;
         this.message = message;
     }
 
@@ -38,6 +30,15 @@ public class Greeting {
         this.id = id;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
     public String toString() {
         return "Greeting [id=" + id + ", message=" + message + "]";
     }

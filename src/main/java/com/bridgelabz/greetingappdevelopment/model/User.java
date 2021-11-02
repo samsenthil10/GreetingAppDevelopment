@@ -22,9 +22,9 @@ public class User {
 
     @Override
     public String toString() {
-        String message = (firstName != null) ? firstName + " " : "";
-        message += (lastName != null) ? lastName : "";
-        return message.trim();
+        String str = (firstName != null) ? firstName + " " : "";
+        str += (lastName != null) ? lastName : "";
+        return str.trim();
     }
 
 }

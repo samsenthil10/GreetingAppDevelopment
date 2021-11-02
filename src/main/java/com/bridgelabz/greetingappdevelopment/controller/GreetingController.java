@@ -1,68 +1,49 @@
 package com.bridgelabz.greetingappdevelopment.controller;
 
-import java.util.concurrent.atomic.AtomicLong;
-
+import java.util.List;
+import com.bridgelabz.greetingappdevelopment.model.Greeting;
 import com.bridgelabz.greetingappdevelopment.model.User;
 import com.bridgelabz.greetingappdevelopment.service.IGreetingService;
-import com.bridgelabz.greetingappdevelopment.model.Greeting;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
 
 @RestController
+@RequestMapping("/greeting")
 public class GreetingController {
-
-    private static String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
 
     @Autowired
     private IGreetingService greetingService;
 
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(value = "firstName", defaultValue = "") String firstName,
-            @RequestParam(value = "lastName", defaultValue = "") String lastName) {
+    @PostMapping(value = { "", "/", "/add" })
+    public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
         User user = new User();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.setFirstName(name);
         return greetingService.addGreeting(user);
     }
 
-    @GetMapping("/get/{id}")
-    public String getMessageById(@PathVariable Long id) {
-        return greetingService.getGreetingById(id).getMessage();
+    @GetMapping(value = { "/greetingid" })
+    public Greeting getGreetingByID(@RequestParam(value = "id", defaultValue = "World") long id) {
+
+        return greetingService.getGreetingById(id);
     }
 
-    @PostMapping("/post")
-    public Greeting setUser(@RequestBody Greeting greeting) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, greeting.getMessage()));
+    @GetMapping("/greetinglist")
+    public List<Greeting> getGreetingList() {
+        return greetingService.getGreetingList();
     }
 
-    @PutMapping("/put/{firstName}")
-    public Greeting sayHelloPutMethod(@PathVariable String firstName,
-            @RequestParam(value = "lastName", defaultValue = "S A") String lastName) {
-        return new Greeting(counter.incrementAndGet(), String.format(template, firstName + " " + lastName));
+    @PutMapping("/update/{name1}/{name2}")
+    public Greeting editGreeting(@PathVariable String name1, @PathVariable String name2) {
+
+        return greetingService.editGreeting(name1, name2);
     }
 
-    @GetMapping("/getAll")
-    public List<Greeting> getMessages() {
-        return greetingService.getAllGreetings();
-    }
-
-    @PutMapping("/edit/{id}")
-	public Greeting sayHelloPutMethod(@PathVariable Long id,
-			@RequestParam(value="firstName",defaultValue = "")String firstName,
-			@RequestParam(value="lastName",defaultValue = "")String lastName)
-	{
-		User user = new User();
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		return greetingService.editGreeting(id,user);
-	}
 }
